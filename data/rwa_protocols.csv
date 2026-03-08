@@ -1,0 +1,31 @@
+rank,name,slug,symbol,tvl,change_1d,change_7d,change_1m,category,chains
+1,Tether Gold,tether-gold,XAUt,3704574998.24,0.0,-2.8,0,Commodities,Ethereum|Plasma|Monad|Avalanche|Arbitrum
+2,Paxos Gold,paxos-gold,PAXG,2574277989.46,-0.14,1.35,0,Commodities,Ethereum
+3,BlackRock BUIDL,blackrock-buidl,BUIDL,2528878094.66,0,1.94,0,Treasuries,Ethereum|Aptos|Solana|Binance|Avalanche
+4,Ondo Yield Assets,ondo-yield-assets,ONDO,2067815968.61,0.12,0.47,0,Other,Ethereum|Solana|Plume Mainnet|Ripple|Stellar
+5,Circle USYC,circle-usyc,-,1990708864.31,0,8.11,0,Other,Binance|Ethereum|Near|Noble
+6,Centrifuge Protocol,centrifuge-protocol,CFG,1374784301.09,0.01,1.04,0,Private Credit,Ethereum|Avalanche|Plume Mainnet|Binance|Base
+7,Spiko,spiko,-,1131748745.76,-0.04,7.28,0,Treasuries,Stellar|Arbitrum|Polygon|Ethereum|Starknet
+8,Ethena USDtb,ethena-usdtb,ENA,834734046.89,-0.06,-0.09,0,Other,Ethereum
+9,WisdomTree,wisdomtree,-,788017766.47,0,6.44,0,Other,Ethereum|Stellar
+10,Ondo Global Markets,ondo-global-markets,ONDO,644302269.93,-0.01,-2.04,0,Other,Ethereum|Binance|Solana
+11,Superstate USTB,superstate-ustb,-,611498730.89,-0.11,-12.76,0,Treasuries,Ethereum|Solana|Plume Mainnet
+12,Anemoy Capital,anemoy-capital,-,568231124.22,0.0,0.07,0,Other,Ethereum|Celo|Base
+13,xStocks,xstocks,-,350618067.23,-5.8,94.88,0,Other,Solana|Arbitrum
+14,USD AI,usd-ai,-,334543997.27,-10.95,-28.34,0,Other,Arbitrum
+15,Exod,exod,EXOD,332000586.84,0,7.33,0,Other,Arbitrum|Algorand
+16,Hastra,hastra,-,319902170.85,0.01,-5.97,0,Other,Solana
+17,Aave Horizon RWA,aave-horizon-rwa,AAVE,312316813.08,-0.06,-9.83,0,Other,Ethereum
+18,Midas RWA,midas-rwa,-,274643394.86,0,0,0,Treasuries,Ethereum|Plasma|Arbitrum|Hyperliquid L1|Katana
+19,Blockchain Capital,blockchain-capital,BCAP,207300525.25,0,-0.18,0,Other,zkSync Era
+20,GAIB,gaib,-,202077414.95,0.01,0.01,0,Other,Ethereum|Sei|Arbitrum|Binance|Base
+21,DigiFT,digift,-,186473358.57,0.0,50.39,0,Other,Ethereum|Plume Mainnet|Binance|Arbitrum
+22,Pareto Credit,pareto-credit,-,169232686.68,0.36,11.55,0,Other,Ethereum|Polygon|Arbitrum|Optimism
+23,RealT Tokens,realt-tokens,REG,156922770.16,-0.0,-0.01,0,Real Estate,xDai
+24,Re,re,-,142893721.41,0.03,4.25,0,Other,Ethereum
+25,RAAC,raac,-,136518901.06,-0.03,-2.77,0,Other,Ethereum
+26,Theo Network thBill,theo-network-thbill,-,129489116.13,0.0,0.06,0,Other,Ethereum|Arbitrum|Solana
+27,AFI Protocol,afi-protocol,-,126428759.1,-0.01,0.01,0,Other,Ethereum|Base|Monad
+28,OnRe,onre,-,126054216.87,1.9,8.45,0,Other,Solana
+29,Usual USD0,usual-usd0,USUAL,107848119.62,-0.01,-1.14,0,Other,Ethereum
+30,Securitize Tokenized AAA CLO Fund,securitize-tokenized-aaa-clo-fund,-,105827921.52,0.03,-0.09,0,Treasuries,Ethereum
