@@ -1,0 +1,44 @@
+<!-- ============================================================
+     HerdVibe imweb 임베드 코드 — RWA 토큰화 자산 대시보드
+     ============================================================ -->
+
+<!-- iframe 임베드 -->
+<iframe
+  id="rwa-dashboard-iframe"
+  src="https://YOUR_USERNAME.github.io/rwa-dashboard/rwa.html"
+  style="width:100%;border:none;min-height:800px;background:#0a0a0a"
+  scrolling="no"
+  loading="lazy"
+></iframe>
+<script>
+window.addEventListener('message', function(e) {
+  if (e.data && e.data.type === 'resize') {
+    var el = document.getElementById('rwa-dashboard-iframe');
+    if (el) el.style.height = e.data.height + 'px';
+  }
+});
+</script>
+
+
+<!-- ============================================================
+     한국어 사용 가이드 HTML 블록 (인라인 스타일)
+     ============================================================ -->
+<div style="max-width:800px;margin:32px auto;padding:24px;background:#111111;border:1px solid #1e1e1e;border-radius:12px;font-family:'Noto Sans KR',sans-serif;color:#cccccc;line-height:1.8">
+
+  <p style="font-size:15px;font-weight:700;color:#00d4aa;margin-bottom:12px">
+    📊 RWA 토큰화 자산 트래커 사용법
+  </p>
+
+  <p style="font-size:13px;margin-bottom:12px">
+    이 대시보드는 <strong style="color:#e8e8e8">DefiLlama</strong> 무료 API 데이터를 기반으로 블록체인에 토큰화된 실물자산(RWA)의 성장 추이를 추적합니다. 미 국채(Treasuries), 사모 신용(Private Credit), 원자재(Commodities), 부동산(Real Estate) 등 카테고리별로 자금이 어떻게 흘러가고 있는지, DeFi 전체 시장 대비 RWA 비중이 어떻게 변화하는지를 한눈에 확인할 수 있습니다.
+  </p>
+
+  <p style="font-size:13px;margin-bottom:12px">
+    <strong style="color:#e8e8e8">탭 1 (TVL 성장 · 카테고리 · 비율)</strong>에서는 RWA 전체 TVL의 시계열 추이와 함께 DeFi Total TVL을 오버레이해서 비교할 수 있고, 카테고리별 스택 차트로 Treasuries 주도의 성장 구조를 시각적으로 확인 가능합니다. RWA/DeFi 비율(%) 차트는 크립토 시장과 무관하게 RWA가 구조적으로 성장하고 있는지를 판단하는 핵심 지표입니다. 기간 선택(3M/6M/1Y/2Y/ALL) 버튼으로 원하는 기간을 자유롭게 조절하세요.
+  </p>
+
+  <p style="font-size:13px;margin-bottom:0">
+    <strong style="color:#e8e8e8">탭 2 (프로토콜 순위 · 체인 분포)</strong>에서는 현재 TVL 기준 상위 프로토콜 순위와 7일/30일 변화율을 확인하고, Ethereum·Solana·Arbitrum 등 체인별로 RWA 자산이 어디에 집중되는지를 도넛 차트로 파악합니다. 하단의 Top 5 프로토콜 TVL 궤적 라인 차트는 어떤 프로젝트가 시장을 주도하는지, 신규 강자는 누구인지를 추적하는 데 유용합니다. 데이터는 매일 자동 업데이트됩니다.
+  </p>
+
+</div>
