@@ -83,9 +83,7 @@
     font-weight: 900;
     letter-spacing: -0.5px;
     margin-bottom: 6px;
-    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #ffffff;
   }
   .header .subtitle {
     font-size: 12px;
@@ -285,37 +283,73 @@
     flex-shrink: 0;
   }
 
-  /* Footer */
-  .watermark {
+  /* Share bar — HerdVibe standard */
+  .share-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    background: #0a0a0a;
+    border-radius: 0 0 12px 12px;
+    margin-top: 20px;
+  }
+  .share-bar-preview {
+    font-size: .75rem;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 50%;
+    line-height: 1.4;
+    font-family: var(--font-mono);
+  }
+  .share-bar-preview span {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .share-bar-buttons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: .75rem;
+    font-weight: 600;
+    font-family: var(--font-kr);
+    cursor: pointer;
+    transition: all 150ms ease;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: #111;
+    color: #999;
+    white-space: nowrap;
+  }
+  .share-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 1px 3px rgba(0,0,0,.5);
+    color: var(--text-primary);
+  }
+  .share-btn svg { flex-shrink: 0; }
+  .share-btn--x:hover { border-color: #fff; color: #fff; background: #111; }
+  .share-btn--kakao:hover { border-color: #FEE500; color: #191919; background: #FEE500; }
+  .share-btn--tg:hover { border-color: #26A5E4; color: #fff; background: rgba(38,165,228,.15); }
+  .share-btn--copy:hover { border-color: #3b82f6; color: #60a5fa; background: rgba(59,130,246,0.12); }
+  /* Toast */
+  .toast-wrap { position: fixed; bottom: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 8px; }
+  .toast { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 10px 18px; font-size: .788rem; color: var(--text-primary); box-shadow: 0 8px 32px rgba(0,0,0,.7); animation: toastIn .3s ease; border-left: 3px solid var(--accent-cyan); }
+  @keyframes toastIn { from { opacity:0; transform:translateY(12px) } to { opacity:1; transform:translateY(0) } }
     text-align: center;
     margin-top: 20px;
     font-size: 10px;
     color: var(--text-muted);
     font-family: var(--font-mono);
     letter-spacing: 1px;
-  }
-  .share-bar {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  .share-btn {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    color: var(--text-secondary);
-    font-size: 13px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-  }
-  .share-btn:hover {
-    border-color: var(--accent-cyan);
-    color: var(--accent-cyan);
   }
   .data-source {
     text-align: center;
@@ -332,6 +366,11 @@
     .header h1 { font-size: 18px; }
     .summary-card .value { font-size: 16px; }
     .tab-btn { font-size: 11px; padding: 8px 6px; }
+    .share-bar { flex-direction: column; gap: 10px; align-items: stretch; }
+    .share-bar-preview { max-width: 100%; }
+    .share-bar-buttons { justify-content: center; flex-wrap: wrap; }
+    .share-btn span.label-text { display: none; }
+    .share-btn { padding: 8px 10px; }
   }
   @media (max-width: 480px) {
     .dashboard-container { padding: 12px 10px 30px; }
@@ -466,11 +505,18 @@
   <div class="watermark">HERDVIBE.COM · Data: DefiLlama API</div>
   <div class="data-source">이 대시보드는 DefiLlama 무료 API를 통해 매일 자동 업데이트됩니다</div>
   <div class="share-bar">
-    <button class="share-btn" title="Twitter" onclick="shareTwitter()">𝕏</button>
-    <button class="share-btn" title="Telegram" onclick="shareTelegram()">✈</button>
-    <button class="share-btn" title="링크 복사" onclick="copyLink()">🔗</button>
+    <div class="share-bar-preview"><span>RWA 토큰화 자산 트래커</span> — herdvibe.com</div>
+    <div class="share-bar-buttons">
+      <button class="share-btn share-btn--x" onclick="doShare('twitter')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span class="label-text">트위터</span></button>
+      <button class="share-btn share-btn--kakao" onclick="doShare('kakao')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.463 2 10.691c0 2.724 1.8 5.112 4.508 6.458l-1.148 4.265a.5.5 0 0 0 .764.533l4.94-3.26c.304.02.612.03.936.03 5.523 0 10-3.462 10-7.735C22 6.463 17.523 3 12 3z"/></svg><span class="label-text">카카오톡</span></button>
+      <button class="share-btn share-btn--tg" onclick="doShare('telegram')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg><span class="label-text">텔레그램</span></button>
+      <button class="share-btn" onclick="doShare('instagram',this)" style="border-color:rgba(255,255,255,0.12)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg><span class="label-text">인스타</span></button>
+      <button class="share-btn share-btn--copy" onclick="doShare('link',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="label-text">링크 복사</span></button>
+    </div>
   </div>
 </div>
+
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
 
 <script>
 // ============================================================
@@ -941,22 +987,67 @@ function setPeriod(btn, chartId) {
 }
 
 // ============================================================
-// Share
+// Share — HerdVibe standard
 // ============================================================
-function shareTwitter() {
-  const t = encodeURIComponent('RWA 토큰화 자산 트래커 📊 실시간 대시보드\nherdvibe.com');
-  window.open(`https://twitter.com/intent/tweet?text=${t}`, '_blank');
+var SHARE_URL = 'https://herdvibe.com/121';
+
+function ensureKakao() {
+  try {
+    if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) Kakao.init('a43ed7b39fac35458f4f9df925a279b5');
+    return typeof Kakao !== 'undefined' && Kakao.isInitialized();
+  } catch(e) { return false; }
 }
-function shareTelegram() {
-  const t = encodeURIComponent('RWA 토큰화 자산 트래커 📊 herdvibe.com');
-  window.open(`https://t.me/share/url?url=https://herdvibe.com&text=${t}`, '_blank');
+
+function kakaoShare() {
+  if (!ensureKakao()) { copyToClipboard(SHARE_URL); toast('링크 복사완료! 카카오톡에 붙여넣기 하세요'); return; }
+  try {
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: 'RWA 토큰화 자산 트래커',
+        description: 'Tokenized Treasuries, Private Credit, Commodities 등 RWA TVL 성장 추이 실시간 분석',
+        imageUrl: 'https://raw.githubusercontent.com/kittycapital/kittycapital.github.io/main/assets/herdvibe-og.png',
+        link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL }
+      },
+      buttons: [{ title: '대시보드 보기', link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL } }]
+    });
+  } catch(e) { copyToClipboard(SHARE_URL); toast('링크 복사완료! 카카오톡에 붙여넣기 하세요'); }
 }
-function copyLink() {
-  navigator.clipboard.writeText(window.location.href).then(() => {
-    const b = document.querySelectorAll('.share-btn')[2];
-    b.textContent = '✓';
-    setTimeout(() => b.textContent = '🔗', 1500);
-  });
+
+function copyToClipboard(text) {
+  try { window.parent.postMessage({ type: 'clipboard', text: text }, '*'); } catch(e) {}
+}
+
+function flashCopied(btn) {
+  if (!btn) return;
+  var orig = btn.innerHTML;
+  btn.style.background = '#22c55e'; btn.style.color = '#fff'; btn.style.borderColor = '#22c55e';
+  var hasLabel = btn.querySelector('.label-text');
+  btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>' + (hasLabel ? '<span class="label-text" style="color:#fff">복사됨!</span>' : '');
+  setTimeout(function() {
+    btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = '';
+    btn.innerHTML = orig;
+  }, 2000);
+}
+
+function doShare(p, btn) {
+  var u = SHARE_URL;
+  var t = encodeURIComponent('RWA 토큰화 자산 트래커 | herdvibe.com');
+  var eu = encodeURIComponent(u);
+  switch(p) {
+    case 'twitter': window.open('https://twitter.com/intent/tweet?text=' + t + '&url=' + eu, '_blank'); break;
+    case 'telegram': window.open('https://t.me/share/url?url=' + eu + '&text=' + t, '_blank'); break;
+    case 'kakao': kakaoShare(); break;
+    case 'instagram': copyToClipboard(u); flashCopied(btn); toast('링크 복사완료! 인스타그램에 붙여넣기 하세요'); break;
+    case 'link': copyToClipboard(u); flashCopied(btn); toast('링크가 복사되었습니다 ✓'); break;
+  }
+}
+
+function toast(msg) {
+  var c = document.querySelector('.toast-wrap');
+  if (!c) { c = document.createElement('div'); c.className = 'toast-wrap'; document.body.appendChild(c); }
+  var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; c.appendChild(t);
+  setTimeout(function() { t.style.opacity = '0'; t.style.transform = 'translateY(12px)'; t.style.transition = '.3s'; setTimeout(function() { t.remove(); }, 300); }, 3000);
 }
 
 // ============================================================
