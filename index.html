@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RWA 토큰화 자산 대시보드 | HerdVibe</title>
+<meta property="og:title" content="RWA 토큰화 자산 트래커 | HerdVibe">
+<meta property="og:description" content="실시간 RWA(Real World Assets) TVL 성장, 카테고리 비중, DeFi 대비 비율, 프로토콜 순위, 체인 분포 대시보드">
+<meta property="og:type" content="website">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0a0a;
+    --bg-card: #111111;
+    --bg-card-hover: #161616;
+    --border: #1e1e1e;
+    --border-accent: #2a2a2a;
+    --text-primary: #e8e8e8;
+    --text-secondary: #888888;
+    --text-muted: #555555;
+    --accent-cyan: #00d4aa;
+    --accent-blue: #3b82f6;
+    --accent-purple: #a855f7;
+    --accent-orange: #f59e0b;
+    --accent-red: #ef4444;
+    --accent-pink: #ec4899;
+    --font-kr: 'Noto Sans KR', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-kr);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+
+  /* Loading */
+  .loading-overlay {
+    position: fixed; inset: 0;
+    background: var(--bg-primary);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+    z-index: 999;
+    transition: opacity 0.4s;
+  }
+  .loading-overlay.hidden { opacity: 0; pointer-events: none; }
+  .loading-spinner {
+    width: 40px; height: 40px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent-cyan);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding: 24px 0 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header .subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+  }
+  .header .update-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    margin-top: 4px;
+  }
+
+  /* Summary Cards */
+  .summary-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .summary-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    transition: border-color 0.2s;
+  }
+  .summary-card:hover { border-color: var(--border-accent); }
+  .summary-card .label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+  }
+  .summary-card .value {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+  .summary-card .change {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    margin-top: 4px;
+  }
+  .change.up { color: var(--accent-cyan); }
+  .change.down { color: var(--accent-red); }
+
+  /* Tabs */
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    background: var(--bg-card);
+    border-radius: 10px;
+    padding: 4px;
+    border: 1px solid var(--border);
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 10px 12px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-family: var(--font-kr);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: var(--border-accent);
+    color: var(--text-primary);
+  }
+  .tab-btn:hover:not(.active) { color: var(--text-primary); }
+
+  /* Chart Panels */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .chart-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .chart-panel .chart-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .chart-panel .chart-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+  .chart-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  .chart-wrapper canvas { width: 100% !important; }
+
+  /* Period buttons */
+  .period-bar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+  .period-btn {
+    padding: 5px 12px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .period-btn.active {
+    background: var(--accent-cyan);
+    color: #000;
+    border-color: var(--accent-cyan);
+    font-weight: 700;
+  }
+
+  /* Two col layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Protocol table */
+  .protocol-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .protocol-table th {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 6px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .protocol-table th:nth-child(n+3) { text-align: right; }
+  .protocol-table td {
+    font-size: 12px;
+    padding: 10px 6px;
+    border-bottom: 1px solid #141414;
+    font-family: var(--font-mono);
+  }
+  .protocol-table td:nth-child(n+3) { text-align: right; }
+  .protocol-table tr:hover td { background: #0f0f0f; }
+  .protocol-table .rank {
+    color: var(--text-muted);
+    font-size: 11px;
+    width: 28px;
+  }
+  .protocol-name {
+    font-family: var(--font-kr);
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .protocol-category {
+    font-size: 9px;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* Legend */
+  .custom-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+  }
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* Footer */
+  .watermark {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    letter-spacing: 1px;
+  }
+  .share-bar {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .share-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .share-btn:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+  }
+  .data-source {
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    margin-top: 8px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .summary-row { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .header h1 { font-size: 18px; }
+    .summary-card .value { font-size: 16px; }
+    .tab-btn { font-size: 11px; padding: 8px 6px; }
+  }
+  @media (max-width: 480px) {
+    .dashboard-container { padding: 12px 10px 30px; }
+    .chart-panel { padding: 14px 12px; }
+    .period-btn { padding: 4px 8px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">DefiLlama 데이터 로딩 중...</div>
+</div>
+
+<div class="dashboard-container">
+  <div class="header">
+    <h1>RWA 토큰화 자산 트래커</h1>
+    <div class="subtitle">Real World Assets On-Chain Analytics · DefiLlama</div>
+    <div class="update-time" id="updateTime"></div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary-row">
+    <div class="summary-card">
+      <div class="label">RWA Total TVL</div>
+      <div class="value" style="color:var(--accent-cyan)" id="sumTvl">-</div>
+      <div class="change" id="sumTvlChange">-</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">DeFi 대비 비율</div>
+      <div class="value" style="color:var(--accent-blue)" id="sumRatio">-</div>
+      <div class="change" id="sumRatioChange">-</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">프로토콜 수</div>
+      <div class="value" style="color:var(--accent-purple)" id="sumCount">-</div>
+      <div class="change" id="sumCountChange">-</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Top 카테고리</div>
+      <div class="value" style="color:var(--accent-orange);font-size:15px" id="sumTopCat">-</div>
+      <div class="change" id="sumTopCatPct">-</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('overview')">📊 TVL 성장 · 카테고리 · 비율</button>
+    <button class="tab-btn" onclick="switchTab('detail')">🏆 프로토콜 순위 · 체인 분포</button>
+  </div>
+
+  <!-- TAB 1: Overview -->
+  <div id="tab-overview" class="tab-content active">
+    <div class="chart-panel">
+      <div class="chart-title">RWA 섹터 Total TVL 추이</div>
+      <div class="chart-desc">토큰화된 실물자산 총 TVL · DeFi 전체 TVL 오버레이</div>
+      <div class="period-bar" id="periodBarTvl">
+        <button class="period-btn" data-days="90" onclick="setPeriod(this,'tvl')">3M</button>
+        <button class="period-btn" data-days="180" onclick="setPeriod(this,'tvl')">6M</button>
+        <button class="period-btn active" data-days="365" onclick="setPeriod(this,'tvl')">1Y</button>
+        <button class="period-btn" data-days="730" onclick="setPeriod(this,'tvl')">2Y</button>
+        <button class="period-btn" data-days="99999" onclick="setPeriod(this,'tvl')">ALL</button>
+      </div>
+      <div class="custom-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-cyan)"></div>RWA TVL</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-orange)"></div>DeFi Total TVL</div>
+      </div>
+      <div class="chart-wrapper"><canvas id="chartTvl" height="260"></canvas></div>
+    </div>
+
+    <div class="chart-panel">
+      <div class="chart-title">카테고리별 TVL 비중 변화</div>
+      <div class="chart-desc">Tokenized Treasuries · Private Credit · Commodities · Real Estate · 기타</div>
+      <div class="period-bar" id="periodBarCat">
+        <button class="period-btn" data-days="180" onclick="setPeriod(this,'cat')">6M</button>
+        <button class="period-btn active" data-days="365" onclick="setPeriod(this,'cat')">1Y</button>
+        <button class="period-btn" data-days="99999" onclick="setPeriod(this,'cat')">ALL</button>
+      </div>
+      <div class="custom-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Treasuries</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>Private Credit</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Commodities</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ec4899"></div>Real Estate</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#555555"></div>기타</div>
+      </div>
+      <div class="chart-wrapper"><canvas id="chartCategory" height="240"></canvas></div>
+    </div>
+
+    <div class="chart-panel">
+      <div class="chart-title">RWA / DeFi 전체 TVL 비율 추이</div>
+      <div class="chart-desc">DeFi 전체 대비 RWA 점유율 (%) · 구조적 성장 추세 확인</div>
+      <div class="custom-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-cyan)"></div>RWA/DeFi 비율 (%)</div>
+      </div>
+      <div class="chart-wrapper"><canvas id="chartRatio" height="220"></canvas></div>
+    </div>
+  </div>
+
+  <!-- TAB 2: Detail -->
+  <div id="tab-detail" class="tab-content">
+    <div class="two-col">
+      <div class="chart-panel">
+        <div class="chart-title">RWA 프로토콜 TVL 순위</div>
+        <div class="chart-desc">TVL 기준 · 7일/30일 변화율</div>
+        <div style="overflow-x:auto">
+          <table class="protocol-table" id="protocolTable">
+            <thead>
+              <tr><th>#</th><th>프로토콜</th><th>TVL</th><th>7d %</th><th>30d %</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="chart-panel">
+        <div class="chart-title">체인별 RWA TVL 분포</div>
+        <div class="chart-desc">어느 체인에 RWA 자산이 집중되는가</div>
+        <div class="chart-wrapper" style="max-width:320px;margin:0 auto">
+          <canvas id="chartChain" height="320"></canvas>
+        </div>
+        <div style="margin-top:16px">
+          <div class="chart-title" style="font-size:13px;margin-bottom:8px">프로토콜 TVL 궤적 (Top 5)</div>
+          <div class="custom-legend" id="protoLineLegend"></div>
+          <div class="chart-wrapper"><canvas id="chartProtoLine" height="200"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="watermark">HERDVIBE.COM · Data: DefiLlama API</div>
+  <div class="data-source">이 대시보드는 DefiLlama 무료 API를 통해 매일 자동 업데이트됩니다</div>
+  <div class="share-bar">
+    <button class="share-btn" title="Twitter" onclick="shareTwitter()">𝕏</button>
+    <button class="share-btn" title="Telegram" onclick="shareTelegram()">✈</button>
+    <button class="share-btn" title="링크 복사" onclick="copyLink()">🔗</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONFIG — GitHub Pages 기준 데이터 경로
+// 실제 배포 시 BASE_DATA_URL을 수정하세요
+// ============================================================
+const BASE_DATA_URL = './data';
+
+// ============================================================
+// CSV 파서
+// ============================================================
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  if (lines.length < 2) return { headers: [], rows: [] };
+  const headers = lines[0].split(',');
+  const rows = lines.slice(1).map(line => {
+    const vals = line.split(',');
+    return headers.reduce((obj, h, i) => {
+      obj[h.trim()] = vals[i] ? vals[i].trim() : '';
+      return obj;
+    }, {});
+  });
+  return { headers, rows };
+}
+
+async function loadCSV(filename) {
+  try {
+    const resp = await fetch(`${BASE_DATA_URL}/${filename}?t=${Date.now()}`);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const text = await resp.text();
+    return parseCSV(text);
+  } catch (e) {
+    console.warn(`CSV 로드 실패: ${filename}`, e);
+    return { headers: [], rows: [] };
+  }
+}
+
+async function loadJSON(filename) {
+  try {
+    const resp = await fetch(`${BASE_DATA_URL}/${filename}?t=${Date.now()}`);
+    return await resp.json();
+  } catch (e) {
+    console.warn(`JSON 로드 실패: ${filename}`, e);
+    return null;
+  }
+}
+
+// ============================================================
+// 글로벌 데이터 스토어
+// ============================================================
+let DATA = {
+  tvlHistory: [],    // { date, rwa_tvl, defi_tvl, rwa_ratio_pct }
+  catHistory: [],     // { date, Treasuries, Private Credit, ... }
+  protocols: [],      // { rank, name, tvl, change_7d, change_1m, category, ... }
+  chains: [],         // { chain, tvl, pct }
+  protoHistory: { headers: [], rows: [] },
+  meta: null,
+};
+
+// ============================================================
+// Chart.js 기본 설정
+// ============================================================
+Chart.defaults.color = '#888888';
+Chart.defaults.font.family = "'JetBrains Mono', monospace";
+Chart.defaults.font.size = 10;
+Chart.defaults.plugins.legend.display = false;
+Chart.defaults.scale.grid = { color: '#1a1a1a', lineWidth: 0.5 };
+Chart.defaults.scale.border = { color: '#1e1e1e' };
+Chart.defaults.elements.point.radius = 0;
+Chart.defaults.elements.point.hoverRadius = 4;
+Chart.defaults.elements.line.borderWidth = 2;
+
+const TT = {
+  backgroundColor: '#1a1a1a',
+  titleColor: '#e8e8e8',
+  bodyColor: '#cccccc',
+  borderColor: '#2a2a2a',
+  borderWidth: 1,
+  cornerRadius: 8,
+  padding: 10,
+  titleFont: { family: "'Noto Sans KR', sans-serif", size: 11, weight: '700' },
+  bodyFont: { family: "'JetBrains Mono', monospace", size: 11 },
+  displayColors: true,
+  boxPadding: 4,
+};
+
+// ============================================================
+// 유틸
+// ============================================================
+function fmt$(v) {
+  const n = parseFloat(v);
+  if (isNaN(n)) return '-';
+  if (n >= 1e9) return '$' + (n / 1e9).toFixed(2) + 'B';
+  if (n >= 1e6) return '$' + (n / 1e6).toFixed(1) + 'M';
+  return '$' + n.toLocaleString();
+}
+
+function fmtPct(v) {
+  const n = parseFloat(v);
+  if (isNaN(n)) return '-';
+  const sign = n >= 0 ? '+' : '';
+  return sign + n.toFixed(1) + '%';
+}
+
+function sliceByDays(arr, days) {
+  if (days >= 99999 || arr.length <= days) return arr;
+  return arr.slice(-days);
+}
+
+// 주간 샘플링 (데이터가 많을 때 퍼포먼스용)
+function weeklyResample(arr) {
+  if (arr.length <= 400) return arr;
+  return arr.filter((_, i) => i % 7 === 0 || i === arr.length - 1);
+}
+
+// ============================================================
+// Chart Instances
+// ============================================================
+let chartTvl, chartCategory, chartRatio, chartChain, chartProtoLine;
+let currentPeriodTvl = 365;
+let currentPeriodCat = 365;
+
+// ============================================================
+// CHART 1: RWA TVL + DeFi overlay
+// ============================================================
+function renderChartTvl(days) {
+  const ctx = document.getElementById('chartTvl').getContext('2d');
+  if (chartTvl) chartTvl.destroy();
+
+  let d = sliceByDays(DATA.tvlHistory, days);
+  d = weeklyResample(d);
+
+  chartTvl = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: d.map(r => r.date),
+      datasets: [
+        {
+          label: 'RWA TVL',
+          data: d.map(r => parseFloat(r.rwa_tvl)),
+          borderColor: '#00d4aa',
+          backgroundColor: 'rgba(0,212,170,0.08)',
+          fill: true,
+          tension: 0.3,
+          yAxisID: 'y',
+        },
+        {
+          label: 'DeFi Total TVL',
+          data: d.map(r => parseFloat(r.defi_tvl)),
+          borderColor: '#f59e0b',
+          borderWidth: 1.5,
+          borderDash: [4, 3],
+          tension: 0.3,
+          yAxisID: 'y1',
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { tooltip: { ...TT, callbacks: {
+        label: c => c.dataset.yAxisID === 'y'
+          ? `RWA TVL: ${fmt$(c.parsed.y)}`
+          : `DeFi TVL: ${fmt$(c.parsed.y)}`
+      }}},
+      scales: {
+        x: { ticks: { maxTicksLimit: 8, maxRotation: 0 } },
+        y: {
+          position: 'left',
+          ticks: { callback: v => fmt$(v) },
+          title: { display: true, text: 'RWA TVL', color: '#00d4aa', font: { size: 10 } }
+        },
+        y1: {
+          position: 'right',
+          grid: { drawOnChartArea: false },
+          ticks: { callback: v => fmt$(v) },
+          title: { display: true, text: 'DeFi TVL', color: '#f59e0b', font: { size: 10 } }
+        }
+      }
+    }
+  });
+}
+
+// ============================================================
+// CHART 2: Category Stacked Area
+// ============================================================
+function renderChartCategory(days) {
+  const ctx = document.getElementById('chartCategory').getContext('2d');
+  if (chartCategory) chartCategory.destroy();
+
+  let d = sliceByDays(DATA.catHistory, days);
+  d = weeklyResample(d);
+
+  const cats = ['Treasuries', 'Private Credit', 'Commodities', 'Real Estate', 'Other'];
+  const colors = ['#3b82f6', '#a855f7', '#f59e0b', '#ec4899', '#555555'];
+
+  chartCategory = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: d.map(r => r.date),
+      datasets: cats.map((c, i) => ({
+        label: c,
+        data: d.map(r => parseFloat(r[c] || 0)),
+        borderColor: colors[i],
+        backgroundColor: colors[i] + '30',
+        fill: true,
+        tension: 0.3,
+        borderWidth: 1.5,
+      }))
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { tooltip: { ...TT, callbacks: {
+        label: c => `${c.dataset.label}: ${fmt$(c.parsed.y)}`
+      }}},
+      scales: {
+        x: { ticks: { maxTicksLimit: 8, maxRotation: 0 }, stacked: true },
+        y: { stacked: true, ticks: { callback: v => fmt$(v) } }
+      }
+    }
+  });
+}
+
+// ============================================================
+// CHART 3: RWA/DeFi Ratio
+// ============================================================
+function renderChartRatio() {
+  const ctx = document.getElementById('chartRatio').getContext('2d');
+  if (chartRatio) chartRatio.destroy();
+
+  const d = weeklyResample(DATA.tvlHistory);
+
+  chartRatio = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: d.map(r => r.date),
+      datasets: [{
+        label: 'RWA/DeFi 비율 (%)',
+        data: d.map(r => parseFloat(r.rwa_ratio_pct)),
+        borderColor: '#00d4aa',
+        backgroundColor: 'rgba(0,212,170,0.06)',
+        fill: true,
+        tension: 0.35,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { tooltip: { ...TT, callbacks: {
+        label: c => `RWA 비율: ${c.parsed.y.toFixed(2)}%`
+      }}},
+      scales: {
+        x: { ticks: { maxTicksLimit: 8, maxRotation: 0 } },
+        y: { ticks: { callback: v => v.toFixed(1) + '%' } }
+      }
+    }
+  });
+}
+
+// ============================================================
+// CHART 4: Chain Doughnut
+// ============================================================
+function renderChartChain() {
+  const ctx = document.getElementById('chartChain').getContext('2d');
+  if (chartChain) chartChain.destroy();
+
+  const chainColors = {
+    'Ethereum': '#627eea', 'Solana': '#9945ff', 'Polygon': '#8247e5',
+    'Arbitrum': '#28a0f0', 'Base': '#0052ff', 'Avalanche': '#e84142',
+    'BSC': '#f3ba2f', 'Tron': '#ff0013', 'Gnosis': '#04795b',
+    'Mantle': '#000', 'Stellar': '#14b8a6',
+  };
+  const fallbackColors = ['#6366f1','#84cc16','#f97316','#06b6d4','#e11d48','#8b5cf6','#555'];
+
+  const chains = DATA.chains.slice(0, 8);
+  const topChain = chains[0] || { chain: '-', pct: 0 };
+
+  chartChain = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: chains.map(c => c.chain),
+      datasets: [{
+        data: chains.map(c => parseFloat(c.pct)),
+        backgroundColor: chains.map((c, i) => chainColors[c.chain] || fallbackColors[i % fallbackColors.length]),
+        borderColor: '#0a0a0a',
+        borderWidth: 2,
+        hoverOffset: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      cutout: '62%',
+      plugins: {
+        legend: {
+          display: true, position: 'bottom',
+          labels: { color: '#888', font: { family: "'JetBrains Mono'", size: 10 }, padding: 12, boxWidth: 10 }
+        },
+        tooltip: { ...TT, callbacks: { label: c => `${c.label}: ${c.parsed}%` } }
+      }
+    },
+    plugins: [{
+      id: 'centerText',
+      beforeDraw(chart) {
+        const { ctx: cx, chartArea: { top, bottom, left, right } } = chart;
+        const x = (left + right) / 2, y = (top + bottom) / 2;
+        cx.save();
+        cx.font = "bold 13px 'JetBrains Mono', monospace";
+        cx.fillStyle = '#e8e8e8';
+        cx.textAlign = 'center';
+        cx.fillText(topChain.chain, x, y - 6);
+        cx.font = "bold 18px 'JetBrains Mono', monospace";
+        cx.fillStyle = '#00d4aa';
+        cx.fillText(parseFloat(topChain.pct).toFixed(1) + '%', x, y + 16);
+        cx.restore();
+      }
+    }]
+  });
+}
+
+// ============================================================
+// CHART 5: Top Protocol Lines
+// ============================================================
+function renderChartProtoLine() {
+  const ctx = document.getElementById('chartProtoLine').getContext('2d');
+  if (chartProtoLine) chartProtoLine.destroy();
+
+  const { headers, rows } = DATA.protoHistory;
+  if (headers.length < 2 || rows.length < 2) return;
+
+  const protoNames = headers.slice(1, 6); // Top 5
+  const colors = ['#00d4aa', '#3b82f6', '#f59e0b', '#a855f7', '#ec4899'];
+  const sampled = weeklyResample(rows);
+
+  const legendEl = document.getElementById('protoLineLegend');
+  legendEl.innerHTML = protoNames.map((n, i) =>
+    `<div class="legend-item"><div class="legend-dot" style="background:${colors[i]}"></div>${n}</div>`
+  ).join('');
+
+  chartProtoLine = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: sampled.map(r => r.date),
+      datasets: protoNames.map((name, i) => ({
+        label: name,
+        data: sampled.map(r => parseFloat(r[name] || 0)),
+        borderColor: colors[i],
+        tension: 0.3,
+        borderWidth: 1.8,
+      }))
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { tooltip: { ...TT, callbacks: {
+        label: c => `${c.dataset.label}: ${fmt$(c.parsed.y)}`
+      }}},
+      scales: {
+        x: { ticks: { maxTicksLimit: 6, maxRotation: 0 } },
+        y: { ticks: { callback: v => fmt$(v) } }
+      }
+    }
+  });
+}
+
+// ============================================================
+// Protocol Table
+// ============================================================
+function renderProtocolTable() {
+  const tbody = document.querySelector('#protocolTable tbody');
+  const rows = DATA.protocols.slice(0, 15);
+  tbody.innerHTML = rows.map(p => {
+    const tvl = parseFloat(p.tvl);
+    const c7 = parseFloat(p.change_7d);
+    const c30 = parseFloat(p.change_1m);
+    return `<tr>
+      <td class="rank">${p.rank}</td>
+      <td><span class="protocol-name">${p.name}</span><span class="protocol-category">${p.category}</span></td>
+      <td>${fmt$(tvl)}</td>
+      <td style="color:${c7 >= 0 ? '#00d4aa' : '#ef4444'}">${fmtPct(c7)}</td>
+      <td style="color:${c30 >= 0 ? '#00d4aa' : '#ef4444'}">${fmtPct(c30)}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ============================================================
+// Summary Cards
+// ============================================================
+function renderSummary() {
+  const latest = DATA.tvlHistory[DATA.tvlHistory.length - 1];
+  const d30 = DATA.tvlHistory[Math.max(0, DATA.tvlHistory.length - 31)];
+
+  if (latest) {
+    const rwa = parseFloat(latest.rwa_tvl);
+    const ratio = parseFloat(latest.rwa_ratio_pct);
+    document.getElementById('sumTvl').textContent = fmt$(rwa);
+    document.getElementById('sumRatio').textContent = ratio.toFixed(1) + '%';
+
+    if (d30) {
+      const rwa30 = parseFloat(d30.rwa_tvl);
+      const ratio30 = parseFloat(d30.rwa_ratio_pct);
+      const chgTvl = ((rwa - rwa30) / rwa30 * 100);
+      const chgRatio = ratio - ratio30;
+      const el1 = document.getElementById('sumTvlChange');
+      el1.textContent = `${chgTvl >= 0 ? '▲' : '▼'} ${fmtPct(chgTvl)} (30d)`;
+      el1.className = `change ${chgTvl >= 0 ? 'up' : 'down'}`;
+      const el2 = document.getElementById('sumRatioChange');
+      el2.textContent = `${chgRatio >= 0 ? '▲' : '▼'} ${chgRatio >= 0 ? '+' : ''}${chgRatio.toFixed(2)}%p (30d)`;
+      el2.className = `change ${chgRatio >= 0 ? 'up' : 'down'}`;
+    }
+  }
+
+  // 프로토콜 수
+  if (DATA.meta) {
+    document.getElementById('sumCount').textContent = DATA.meta.total_rwa_protocols || '-';
+  } else {
+    document.getElementById('sumCount').textContent = DATA.protocols.length || '-';
+  }
+
+  // Top 카테고리 계산
+  const catTotals = {};
+  DATA.protocols.forEach(p => {
+    const cat = p.category || 'Other';
+    catTotals[cat] = (catTotals[cat] || 0) + parseFloat(p.tvl || 0);
+  });
+  const totalCatTvl = Object.values(catTotals).reduce((a, b) => a + b, 0);
+  const sorted = Object.entries(catTotals).sort((a, b) => b[1] - a[1]);
+  if (sorted.length > 0) {
+    document.getElementById('sumTopCat').textContent = sorted[0][0];
+    const pct = totalCatTvl > 0 ? (sorted[0][1] / totalCatTvl * 100).toFixed(1) : 0;
+    document.getElementById('sumTopCatPct').textContent = `점유율 ${pct}%`;
+  }
+
+  // 업데이트 시간
+  if (DATA.meta && DATA.meta.last_updated) {
+    const d = new Date(DATA.meta.last_updated);
+    document.getElementById('updateTime').textContent =
+      `Last Update: ${d.toISOString().replace('T', ' ').slice(0, 19)} UTC`;
+  }
+}
+
+// ============================================================
+// Tab & Period
+// ============================================================
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  if (tab === 'overview') {
+    document.getElementById('tab-overview').classList.add('active');
+    document.querySelectorAll('.tab-btn')[0].classList.add('active');
+  } else {
+    document.getElementById('tab-detail').classList.add('active');
+    document.querySelectorAll('.tab-btn')[1].classList.add('active');
+  }
+}
+
+function setPeriod(btn, chartId) {
+  btn.parentElement.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const days = parseInt(btn.dataset.days);
+  if (chartId === 'tvl') { currentPeriodTvl = days; renderChartTvl(days); }
+  if (chartId === 'cat') { currentPeriodCat = days; renderChartCategory(days); }
+}
+
+// ============================================================
+// Share
+// ============================================================
+function shareTwitter() {
+  const t = encodeURIComponent('RWA 토큰화 자산 트래커 📊 실시간 대시보드\nherdvibe.com');
+  window.open(`https://twitter.com/intent/tweet?text=${t}`, '_blank');
+}
+function shareTelegram() {
+  const t = encodeURIComponent('RWA 토큰화 자산 트래커 📊 herdvibe.com');
+  window.open(`https://t.me/share/url?url=https://herdvibe.com&text=${t}`, '_blank');
+}
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const b = document.querySelectorAll('.share-btn')[2];
+    b.textContent = '✓';
+    setTimeout(() => b.textContent = '🔗', 1500);
+  });
+}
+
+// ============================================================
+// iframe height sync
+// ============================================================
+if (window.parent !== window) {
+  const ro = new ResizeObserver(() => {
+    window.parent.postMessage({ type: 'resize', height: document.documentElement.scrollHeight }, '*');
+  });
+  ro.observe(document.body);
+}
+
+// ============================================================
+// INIT — 데이터 로드 → 렌더링
+// ============================================================
+async function init() {
+  const [tvlCsv, catCsv, protoCsv, chainCsv, protoHistCsv, meta] = await Promise.all([
+    loadCSV('rwa_tvl_history.csv'),
+    loadCSV('rwa_category_history.csv'),
+    loadCSV('rwa_protocols.csv'),
+    loadCSV('rwa_chains.csv'),
+    loadCSV('rwa_top_protocols_history.csv'),
+    loadJSON('meta.json'),
+  ]);
+
+  DATA.tvlHistory = tvlCsv.rows;
+  DATA.catHistory = catCsv.rows;
+  DATA.protocols = protoCsv.rows;
+  DATA.chains = chainCsv.rows;
+  DATA.protoHistory = protoHistCsv;
+  DATA.meta = meta;
+
+  // 데이터 유효성 체크
+  if (DATA.tvlHistory.length === 0) {
+    document.getElementById('loadingOverlay').innerHTML =
+      '<div class="loading-text" style="color:#ef4444">⚠ 데이터 파일을 찾을 수 없습니다.<br>GitHub Actions를 먼저 실행해주세요.</div>';
+    return;
+  }
+
+  // 렌더링
+  renderSummary();
+  renderChartTvl(currentPeriodTvl);
+  renderChartCategory(currentPeriodCat);
+  renderChartRatio();
+  renderChartChain();
+  renderChartProtoLine();
+  renderProtocolTable();
+
+  // 로딩 해제
+  document.getElementById('loadingOverlay').classList.add('hidden');
+}
+
+init();
+</script>
+</body>
+</html>
