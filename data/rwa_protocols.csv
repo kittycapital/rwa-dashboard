@@ -1,31 +1,31 @@
 rank,name,slug,symbol,tvl,change_1d,change_7d,change_1m,category,chains
-1,BlackRock BUIDL,blackrock-buidl,-,3546411100.23,-0.0,0.92,0,Treasuries,Ethereum|Aptos|Solana|Avalanche|Binance
-2,Tether Gold,tether-gold,XAUt,3120345559.52,0.39,1.56,0,Commodities,Ethereum|Monad|Plasma|Avalanche|Arbitrum
-3,Circle USYC,circle-usyc,-,2995305241.97,0,-0.31,0,Other,Binance|Ethereum|Noble|Near
-4,Ondo Yield Assets,ondo-yield-assets,ONDO,2520900676.94,0.04,0.12,0,Other,Ethereum|Stellar|Sei|Ripple|Solana
-5,Spiko,spiko,-,2425756515.37,0.13,3.5,0,Treasuries,Stellar|Arbitrum|Ethereum|Polygon|Base
-6,Paxos Gold,paxos-gold,PAXG,1916857984.58,0.38,1.76,0,Commodities,Ethereum
-7,Centrifuge Protocol,centrifuge-protocol,CFG,1635381707.78,-0.01,-0.14,0,Private Credit,Ethereum|Avalanche|Base|Plume Mainnet|Monad
-8,Ondo Global Markets,ondo-global-markets,ONDO,964977130.4,0.18,0.06,0,Other,Ethereum|Binance|Solana
-9,Blockchain Capital,blockchain-capital,BCAP,959450870.24,0,-0.01,0,Other,zkSync Era
-10,Anemoy Capital,anemoy-capital,-,871899205.44,-0.01,0.06,0,Other,Ethereum|Celo|Base
-11,Invesco USTB,invesco-ustb,-,782229806.07,-0.02,-2.81,0,Other,Ethereum|Solana|Plume Mainnet
-12,WisdomTree,wisdomtree,-,775742388.9,0,-0.0,0,Other,Ethereum|Stellar
-13,Hastra,hastra,-,557086063.81,0.03,5.95,0,Other,Ethereum|Solana
-14,xStocks,xstocks,-,381018084.37,-0.58,2.26,0,Other,Solana|Arbitrum
-15,Ethena USDtb,ethena-usdtb,ENA,357668032.11,-0.01,1.47,0,Other,Ethereum
-16,Re,re,RE,287095953.98,0.21,8.57,0,Other,Ethereum|Base|Arbitrum|Avalanche
-17,OpenTrade,opentrade,-,263178187.69,0.01,0.61,0,Other,Avalanche|Plume Mainnet|Ethereum
-18,OnRe,onre,-,262350806.12,0.34,4.02,0,Other,Solana
-19,OpenEden TBILL,openeden-tbill,-,253130995.06,0.01,-0.88,0,Treasuries,Binance|Ripple|Ethereum|Solana|Arbitrum
-20,Aave Horizon RWA,aave-horizon-rwa,AAVE,251312842.93,-0.03,-2.73,0,Other,Ethereum
-21,Pareto Credit,pareto-credit,-,234994634.59,-0.01,0.37,0,Other,Ethereum|Polygon|Arbitrum|Optimism
-22,Figure Markets Democratized Prime,figure-markets-democratized-prime,-,217098369.97,-0.06,9.22,0,Other,Provenance
-23,VanEck Treasury Fund,vaneck-treasury-fund,-,193255771.16,0,0.14,0,Other,Avalanche|Ethereum|Binance|Solana
-24,USD AI,usd-ai,CHIP,176029885.79,0.6,0.72,0,Other,Arbitrum
-25,DigiFT,digift,-,159875628.42,0,-0.35,0,Other,Ethereum|Plume Mainnet|Arbitrum|Binance
-26,RealT Tokens,realt-tokens,REG,155056510.12,0.18,-0.03,0,Real Estate,xDai
-27,Midas RWA,midas-rwa,-,131801808.35,0.18,-5.64,0,Treasuries,Ethereum|Monad|Hyperliquid L1|Arbitrum|Plasma
-28,R25,r25,-,131273131.51,0.02,0.16,0,Other,Pharos
-29,Mantle Index Four Fund,mantle-index-four-fund,MI4,117541314.71,0.01,-1.11,0,Other,Mantle
-30,Nest Credit,nest-credit,-,116503705.17,0.01,1.26,0,Other,Plume Mainnet|Ethereum|Solana
+1,BlackRock BUIDL,blackrock-buidl,-,3547370048.38,0.03,0.92,0,Treasuries,Ethereum|Aptos|Solana|Avalanche|Binance
+2,Tether Gold,tether-gold,XAUt,3121822593.15,0.05,-0.32,0,Commodities,Ethereum|Monad|Plasma|Avalanche|Ink
+3,Circle USYC,circle-usyc,-,2981057517.49,-0.48,-0.81,0,Other,Binance|Ethereum|Noble|Near
+4,Ondo Yield Assets,ondo-yield-assets,ONDO,2517670314.94,-0.13,0.07,0,Other,Ethereum|Stellar|Sei|Ripple|Solana
+5,Spiko,spiko,-,2443560459.24,0.73,2.55,0,Treasuries,Stellar|Arbitrum|Ethereum|Polygon|Base
+6,Paxos Gold,paxos-gold,PAXG,1915613826.34,-0.06,-0.39,0,Commodities,Ethereum
+7,Centrifuge Protocol,centrifuge-protocol,CFG,1635951528.02,0.03,0.47,0,Private Credit,Ethereum|Avalanche|Base|Plume Mainnet|Monad
+8,Ondo Global Markets,ondo-global-markets,ONDO,958774077.61,-0.64,-0.14,0,Other,Ethereum|Binance|Solana
+9,Blockchain Capital,blockchain-capital,BCAP,956829913.64,-0.27,-0.27,0,Other,zkSync Era
+10,Anemoy Capital,anemoy-capital,-,872212002.78,0.04,0.07,0,Other,Ethereum|Celo|Base
+11,WisdomTree,wisdomtree,-,775742875.65,0.0,-0.0,0,Other,Ethereum|Stellar
+12,Invesco USTB,invesco-ustb,-,773007588.67,-1.18,-1.52,0,Other,Ethereum|Solana|Plume Mainnet
+13,Hastra,hastra,-,565619847.83,1.53,5.28,0,Other,Ethereum|Solana
+14,xStocks,xstocks,-,386588876.41,1.46,4.18,0,Other,Solana|Arbitrum
+15,Ethena USDtb,ethena-usdtb,ENA,357646909.65,-0.01,1.5,0,Other,Ethereum
+16,Re,re,RE,288636803.05,0.54,6.83,0,Other,Ethereum|Base|Arbitrum|Avalanche
+17,OnRe,onre,-,267592413.52,2.0,4.93,0,Other,Solana
+18,OpenTrade,opentrade,-,263383287.56,0.08,0.65,0,Other,Avalanche|Plume Mainnet|Ethereum
+19,OpenEden TBILL,openeden-tbill,-,253155452.25,0.01,-0.85,0,Treasuries,Binance|Ripple|Ethereum|Solana|Arbitrum
+20,Aave Horizon RWA,aave-horizon-rwa,AAVE,251007760.94,-0.12,-2.85,0,Other,Ethereum
+21,Pareto Credit,pareto-credit,-,235046224.02,0.02,0.39,0,Other,Ethereum|Polygon|Arbitrum|Optimism
+22,Figure Markets Democratized Prime,figure-markets-democratized-prime,-,224519330.18,3.42,7.0,0,Other,Provenance
+23,VanEck Treasury Fund,vaneck-treasury-fund,-,193310849.0,0.03,0.14,0,Other,Avalanche|Ethereum|Binance|Solana
+24,USD AI,usd-ai,CHIP,176600412.17,0.32,1.07,0,Other,Arbitrum
+25,DigiFT,digift,-,173224901.87,8.35,7.97,0,Other,Ethereum|Plume Mainnet|Arbitrum|Binance
+26,RealT Tokens,realt-tokens,REG,155065484.71,0.01,0.01,0,Real Estate,xDai
+27,Midas RWA,midas-rwa,-,131797706.11,-0.0,-1.56,0,Treasuries,Ethereum|Monad|Hyperliquid L1|Arbitrum|Plasma
+28,R25,r25,-,131333702.51,0.05,0.18,0,Other,Pharos
+29,Mantle Index Four Fund,mantle-index-four-fund,MI4,118827264.86,1.09,-1.55,0,Other,Mantle
+30,RAAC,raac,-,116011687.05,0.06,-0.43,0,Other,Ethereum
