@@ -1,31 +1,31 @@
 rank,name,slug,symbol,tvl,change_1d,change_7d,change_1m,category,chains
-1,Invesco USTB,invesco-ustb,-,549850789.54,1.12,4.25,0,Other,Ethereum|Solana|Plume Mainnet
-2,Ethena USDtb,ethena-usdtb,ENA,475880405.18,0.04,-1.35,0,Other,Ethereum
-3,Re,re,RE,382272981.38,0.44,3.86,0,Other,Ethereum|Base|Arbitrum|Avalanche
-4,Huma,huma,-,379611491.09,2.81,16.61,0,Other,Solana|Ethereum|Stellar|Monad
-5,Anemoy Capital,anemoy-capital,-,333997394.18,0.01,-48.61,0,Other,Ethereum|Base|Celo
-6,OnRe,onre,-,301137355.01,-0.53,-0.57,0,Other,Solana
-7,OpenTrade,opentrade,-,266171449.06,-0.37,0.75,0,Other,Avalanche|Plume Mainnet|Ethereum
-8,Plume Vaults,plume-vaults,-,208207480.33,-0.27,27.15,0,Other,Plume Mainnet|Ethereum|Binance|Solana|Avalanche
-9,USD AI,usd-ai,CHIP,207002871.67,-37.21,-33.57,0,Other,Arbitrum
-10,DigiFT,digift,-,194585440.78,-0.01,0.5,0,Other,Ethereum|Plume Mainnet|Binance|Arbitrum
-11,RealT Tokens,realt-tokens,REG,155085095.39,-0.01,0.02,0,Real Estate,xDai
-12,R25,r25,-,134147191.68,0.59,0.82,0,Other,Pharos
-13,Theo Network thUSD,theo-network-thusd,-,133796141.33,-0.37,-0.57,0,Other,Ethereum
-14,Frax USD,frax-usd,FRAX,105674818.74,-0.59,6.52,0,Other,Ethereum
-15,Valos,valos,-,105445847.33,-0.01,0.18,0,Other,Monad
-16,Lofty,lofty,-,101077452.64,-0.01,0.38,0,Other,Algorand
-17,Usual USD0,usual-usd0,USUAL,87879297.34,-0.0,-0.96,0,Other,Ethereum
-18,Sky RWA,sky-rwa,SKY,72136843.32,-0.01,-0.14,0,Other,Ethereum
-19,stUSDT,stusdt,STUSDT,61084097.27,-0.19,0.19,0,Other,Tron|Ethereum
-20,Brickken,brickken,BKN,42395908.22,-0.01,0.04,0,Other,Binance|Ethereum|Base|Avalanche|Polygon
-21,Tangible RWA,tangible-rwa,TNGBL,41494280.96,-0.47,-1.09,0,Real Estate,Polygon|Arbitrum|Optimism|re.al|Base
-22,KAIO,kaio,KAIO,39649226.89,-0.01,0.02,0,Other,Sei|Aptos|Immutable zkEVM|Sui|Near
-23,GoldFinger,goldfinger,ART,23546663.89,-0.01,0.06,0,Other,Binance
+1,Invesco USTB,invesco-ustb,-,546640946.95,-0.58,5.61,0,Other,Ethereum|Solana|Plume Mainnet
+2,Ethena USDtb,ethena-usdtb,ENA,475801878.41,-0.02,-1.47,0,Other,Ethereum
+3,Re,re,RE,384766669.71,0.65,4.4,0,Other,Ethereum|Base|Arbitrum|Avalanche
+4,Huma,huma,-,377321655.8,-0.6,12.88,0,Other,Solana|Ethereum|Stellar|Monad
+5,Anemoy Capital,anemoy-capital,-,334031992.54,0.01,-4.58,0,Other,Ethereum|Base|Celo
+6,OnRe,onre,-,299233296.28,-0.64,-1.28,0,Other,Solana
+7,OpenTrade,opentrade,-,266232821.55,0.02,1.01,0,Other,Avalanche|Plume Mainnet|Ethereum
+8,Plume Vaults,plume-vaults,-,219312192.93,5.33,5.69,0,Other,Plume Mainnet|Ethereum|Binance|Solana|Avalanche
+9,USD AI,usd-ai,CHIP,208605835.31,0.77,-31.95,0,Other,Arbitrum
+10,DigiFT,digift,-,194414723.31,-0.09,0.4,0,Other,Ethereum|Plume Mainnet|Binance|Arbitrum
+11,RealT Tokens,realt-tokens,REG,155102560.81,0.01,0.04,0,Real Estate,xDai
+12,R25,r25,-,134221964.84,0.61,0.77,0,Other,Pharos
+13,Theo Network thUSD,theo-network-thusd,-,133819595.16,0.02,-0.51,0,Other,Ethereum
+14,Frax USD,frax-usd,FRAX,105993513.86,0.26,4.62,0,Other,Ethereum
+15,Valos,valos,-,105466508.89,0.02,0.18,0,Other,Monad
+16,Lofty,lofty,-,101091400.56,0.01,0.07,0,Other,Algorand
+17,Usual USD0,usual-usd0,USUAL,88047114.91,0.19,0.24,0,Other,Ethereum
+18,Sky RWA,sky-rwa,SKY,72148500.51,0.02,-0.11,0,Other,Ethereum
+19,stUSDT,stusdt,STUSDT,61094032.06,0.02,0.2,0,Other,Tron|Ethereum
+20,Brickken,brickken,BKN,42401196.55,0.01,0.05,0,Other,Binance|Ethereum|Base|Avalanche|Polygon
+21,Tangible RWA,tangible-rwa,TNGBL,41518994.02,-0.04,-0.91,0,Real Estate,Polygon|Arbitrum|Optimism|re.al|Base
+22,KAIO,kaio,KAIO,39652606.03,0.01,0.04,0,Other,Sei|Aptos|Immutable zkEVM|Sui|Near
+23,GoldFinger,goldfinger,ART,23549483.8,0.01,0.07,0,Other,Binance
 24,T RIZE,t-rize,RIZE,23000000,0,0,0,Other,Base
-25,Clearpool TPOOL,clearpool-tpool,CPOOL,20860029.47,-0.1,0.34,0,Private Credit,Flare|Ethereum
+25,Clearpool TPOOL,clearpool-tpool,CPOOL,20832377.96,-0.14,-0.1,0,Private Credit,Flare|Ethereum
 26,Vesta Equity,vesta-equity,-,20634337,0,0,0,Other,Algorand
-27,Sygnum FIUSD Liquidity Fund,sygnum-fiusd-liquidity-fund,-,19305865.04,-13.47,-13.41,0,Other,zkSync Era
-28,GAIB,gaib,GAIB,18916052.38,0,-0.0,0,Other,Ethereum|Base|Arbitrum|Binance
+27,Sygnum FIUSD Liquidity Fund,sygnum-fiusd-liquidity-fund,-,19307902.31,0.01,-13.41,0,Other,zkSync Era
+28,GAIB,gaib,GAIB,18916042.38,-0.0,-0.0,0,Other,Ethereum|Base|Arbitrum|Binance
 29,Stobox,stobox,STBU,13952059,0,0,0,Other,Arbitrum|Binance|Polygon
-30,Estate Protocol,estate-protocol,-,13949719.32,-0.01,0.02,0,Other,Arbitrum
+30,Estate Protocol,estate-protocol,-,13951164.35,0.01,0.04,0,Other,Arbitrum
