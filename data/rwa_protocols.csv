@@ -1,31 +1,31 @@
 rank,name,slug,symbol,tvl,change_1d,change_7d,change_1m,category,chains
-1,Re,re,RE,484687197.41,0.51,1.51,0,Other,Ethereum|Base|Arbitrum|Avalanche
-2,Ethena USDtb,ethena-usdtb,ENA,416781015.97,-0.09,-13.97,0,Other,Ethereum
-3,Huma,huma,HUMA,352611907.85,4.41,-6.53,0,Other,Solana|Ethereum|Stellar|Monad
-4,OnRe,onre,-,308541325.28,0.29,1.41,0,Other,Solana
-5,OpenTrade,opentrade,-,245530507.07,-0.03,-0.31,0,Other,Avalanche|Ethereum|Plume Mainnet
-6,Plume Vaults,plume-vaults,-,220274577.05,0.94,-5.73,0,Other,Ethereum|Plume Mainnet|Solana|Binance|Avalanche
-7,R25,r25,-,197573847.42,-0.08,0.55,0,Other,Pharos|Sui
-8,USD AI,usd-ai,CHIP,158145430.01,0.11,-42.14,0,Other,Arbitrum
-9,RealT Tokens,realt-tokens,REG,155035785.66,-0.03,-0.02,0,Real Estate,xDai
-10,Theo Network thUSD,theo-network-thusd,-,138577263.75,-0.01,4.85,0,Other,Ethereum
-11,Valos,valos,-,106178673.84,0.0,0.13,0,Other,Monad
-12,Anemoy Capital,anemoy-capital,-,102303517.43,0.11,-0.4,0,Other,Ethereum|Base|Celo
-13,Lofty,lofty,-,101096418.44,-0.03,-0.05,0,Other,Algorand
-14,Frax USD,frax-usd,FRAX,96139694.23,-2.62,-2.41,0,Other,Ethereum
-15,Ember,ember,-,95897679.13,-1.13,-0.13,0,Other,Ethereum|Sui|Base|Pharos|Monad
-16,Usual USD0,usual-usd0,USUAL,82016972.11,-0.62,89.01,0,Other,Ethereum
-17,Sky RWA,sky-rwa,SKY,65152512.38,-0.29,0.27,0,Other,Ethereum
-18,stUSDT,stusdt,STUSDT,56234108.57,-0.02,0.01,0,Other,Tron|Ethereum
-19,Brickken,brickken,BKN,42420473.63,-0.04,-0.03,0,Other,Binance|Ethereum|Base|Avalanche|Polygon
-20,Tangible RWA,tangible-rwa,TNGBL,41991624.46,-0.46,-0.23,0,Real Estate,Polygon|Arbitrum|Optimism|Ethereum|Base
-21,KAIO,kaio,KAIO,34655555.44,-0.01,-10.48,0,Other,Sei|Immutable zkEVM|Aptos|Near|Avalanche
-22,GoldFinger,goldfinger,ART,23530385.6,-0.03,-0.01,0,Other,Binance
+1,Re,re,RE,484766408.0,0.02,1.2,0,Other,Ethereum|Base|Arbitrum|Avalanche
+2,Ethena USDtb,ethena-usdtb,ENA,416529295.0,-0.08,-14.03,0,Other,Ethereum
+3,Huma,huma,HUMA,345733807.16,-1.95,-9.71,0,Other,Solana|Ethereum|Stellar|Monad
+4,OnRe,onre,-,308528825.26,0.0,0.29,0,Other,Solana
+5,OpenTrade,opentrade,-,245559471.53,0.02,-0.44,0,Other,Avalanche|Ethereum|Plume Mainnet
+6,Plume Vaults,plume-vaults,-,218307827.76,-0.91,-4.66,0,Other,Ethereum|Plume Mainnet|Solana|Binance|Avalanche
+7,R25,r25,-,197637082.14,0.03,0.63,0,Other,Pharos|Sui
+8,USD AI,usd-ai,CHIP,158156895.61,-0.09,-42.35,0,Other,Arbitrum
+9,RealT Tokens,realt-tokens,REG,155065496.63,0.01,-0.02,0,Real Estate,xDai
+10,Theo Network thUSD,theo-network-thusd,-,138570712.77,-0.0,4.83,0,Other,Ethereum
+11,Valos,valos,-,106209006.52,0.05,0.1,0,Other,Monad
+12,Lofty,lofty,-,101114641.12,0.01,-0.05,0,Other,Algorand
+13,Frax USD,frax-usd,FRAX,95831342.93,-0.24,-1.37,0,Other,Ethereum
+14,Ember,ember,-,95766510.19,-0.04,-0.89,0,Other,Ethereum|Sui|Base|Pharos|Monad
+15,Usual USD0,usual-usd0,USUAL,81752431.75,-0.32,-1.52,0,Other,Ethereum
+16,Sky RWA,sky-rwa,SKY,61212763.67,-6.05,-5.81,0,Other,Ethereum
+17,Anemoy Capital,anemoy-capital,-,52212143.36,-48.96,-49.18,0,Other,Ethereum|Base|Celo
+18,stUSDT,stusdt,STUSDT,47666982.37,-15.24,-15.24,0,Other,Tron|Ethereum
+19,Brickken,brickken,BKN,42424885.04,0.0,-0.02,0,Other,Binance|Ethereum|Base|Avalanche|Polygon
+20,Tangible RWA,tangible-rwa,TNGBL,41862824.37,-0.27,-0.32,0,Real Estate,Polygon|Arbitrum|Optimism|Ethereum|Base
+21,KAIO,kaio,KAIO,34655745.35,-0.0,-10.49,0,Other,Sei|Immutable zkEVM|Aptos|Near|Avalanche
+22,GoldFinger,goldfinger,ART,23534042.05,0.01,-0.01,0,Other,Binance
 23,T RIZE,t-rize,RIZE,23000000,0,0,0,Other,Base
-24,Clearpool TPOOL,clearpool-tpool,CPOOL,17774333.16,-0.04,-24.47,0,Private Credit,Flare|Ethereum
-25,Sygnum FIUSD Liquidity Fund,sygnum-fiusd-liquidity-fund,-,14179113.2,0.01,-7.49,0,Other,zkSync Era
-26,Paimon,paimon,-,14098553.03,-0.02,0.07,0,Other,Binance
+24,Clearpool TPOOL,clearpool-tpool,CPOOL,17682271.36,-0.52,-24.88,0,Private Credit,Flare|Ethereum
+25,Sygnum FIUSD Liquidity Fund,sygnum-fiusd-liquidity-fund,-,14183687.08,0.03,-7.49,0,Other,zkSync Era
+26,Paimon,paimon,-,14106265.64,0.05,0.11,0,Other,Binance
 27,Estate Protocol,estate-protocol,-,13945568.86,0,0,0,Other,Arbitrum
-28,Theo Network thBill,theo-network-thbill,-,11805539.07,-0.01,0.09,0,Other,Ethereum|Stable|Arbitrum|Base|Monad
-29,Uranium.io,uranium.io,XU3O8,10432918.85,-0.68,36.14,0,Other,Etherlink
-30,Binaryx Platform,binaryx-platform,-,8992534.93,-0.04,0.0,0,Other,Polygon
+28,Uranium.io,uranium.io,XU3O8,10508606.32,0.83,36.01,0,Other,Etherlink
+29,Binaryx Platform,binaryx-platform,-,8993601.21,0.01,-0.02,0,Other,Polygon
+30,Solv RWA,solv-rwa,SOLV,8721157.78,-0.21,-1.8,0,Other,Binance|Mantle
